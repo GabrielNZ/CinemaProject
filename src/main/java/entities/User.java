@@ -20,7 +20,7 @@ public class User implements UserDetails {
     private String phone;
     private Roles role;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user")
     private List<Ticket> ticket;
 
     @Override
