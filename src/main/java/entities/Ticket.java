@@ -1,7 +1,6 @@
 package entities;
 
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,25 +10,26 @@ public class Ticket implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Double price;
 
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
 
-    @OneToMany
-    @JoinColumn(name = "id_movie")
-    private Movies movie;
+    @ManyToOne
+    @JoinColumn(name = "id_movieroom")
+    private MovieRoom movieRoom;
 
     public Long getId() {
         return id;
     }
 
-    public Movies getMovie() {
-        return movie;
+    public MovieRoom getMovie() {
+        return movieRoom;
     }
 
-    public void setMovie(Movies movie) {
-        this.movie = movie;
+    public void setMovie(MovieRoom movie) {
+        this.movieRoom = movie;
     }
 
     public User getUser() {
@@ -38,6 +38,22 @@ public class Ticket implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public MovieRoom getMovieRoom() {
+        return movieRoom;
+    }
+
+    public void setMovieRoom(MovieRoom movieRoom) {
+        this.movieRoom = movieRoom;
     }
 
     @Override
