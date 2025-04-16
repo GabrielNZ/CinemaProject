@@ -1,5 +1,6 @@
 package entities;
 
+import entities.enums.Roles;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,6 +18,7 @@ public class User implements UserDetails {
     private String password;
     private String email;
     private String phone;
+    @Enumerated(EnumType.STRING)
     private Roles role;
 
     @OneToMany(mappedBy = "user")

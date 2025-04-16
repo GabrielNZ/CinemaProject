@@ -1,4 +1,4 @@
-package entities;
+package entities.enums;
 
 public enum Roles {
     USER("user"), ADMIN("admin");
