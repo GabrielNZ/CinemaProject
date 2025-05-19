@@ -16,10 +16,20 @@ import java.util.List;
 public class TicketService {
     @Autowired
     private TicketRepository ticketRepository;
+    @Autowired
+    private UserService userService;
 
     @Transactional
     public Ticket create(Ticket ticket) {
         return ticketRepository.save(ticket);
+    }
+    public String registratingTicket(Long ticketId, Long userId) {
+        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new ResourceNotFound("Ticket not found"));
+        User user = userService.findById(userId);
+        ticket.setUser(user);
+        user.getTicket().add(ticket);
+        delete(ticketId);
+        return "User: "+user.getUsername()+" is now owning the ticket from id: "+ticketId;
     }
 
     public List<Ticket> findAll() {
