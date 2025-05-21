@@ -1,6 +1,8 @@
 package services;
 
+import entities.MovieRoom;
 import entities.Movies;
+import entities.Ticket;
 import entities.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +18,19 @@ import java.util.List;
 public class MoviesService {
     @Autowired
     private MoviesRepository moviesRepository;
+    @Autowired
+    private MovieRoomService movieRoomService;
 
     @Transactional
     public Movies create(Movies movie) {
         return moviesRepository.save(movie);
+    }
+
+    public String registratingMovie(Long movieId, Long movieRoomId) {
+        Movies movie = moviesRepository.findById(movieId).orElseThrow(() -> new ResourceNotFound("Movie not found"));
+        MovieRoom movieRoom = movieRoomService.findById(movieRoomId);
+        movie.getMovieRoom().add(movieRoom);
+        return "The "+movie.getTitle()+" is now available in the Room "+movieRoom.getId();
     }
 
     public List<Movies> findAll() {

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import services.MovieRoomService;
+import repository.MovieRoomRepository;
 import services.TicketService;
 
 import java.net.URI;
@@ -18,7 +18,7 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
     @Autowired
-    private MovieRoomService movieRoomService;
+    private MovieRoomRepository movieRoomRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity<Ticket> findById(@PathVariable Long id) {
@@ -34,9 +34,12 @@ public class TicketController {
     @PostMapping("{id}")
     public ResponseEntity<Object> createTicket(@RequestBody Ticket ticket,@PathVariable Long id) {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(ticket.getId()).toUri();
-        if(movieRoomService.findById(id).getAvailableSeats() > 0) {
-            ticket.setMovieRoom(movieRoomService.findById(id));
-            ResponseEntity.created(uri).body(ticketService.create(ticket));
+        MovieRoom movieRoom = movieRoomRepository.findById(id).get();
+        if(movieRoom.getAvailableSeats() > 0) {
+            ticket.setMovieRoom(movieRoom);
+            movieRoom.getTicket().add(ticket);
+            movieRoomRepository.save(movieRoom);
+            return ResponseEntity.created(uri).body(ticketService.create(ticket));
         }
         return ResponseEntity.ok().body("Movie Room already full");
     }

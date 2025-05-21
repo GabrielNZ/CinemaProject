@@ -1,7 +1,7 @@
 package controllers;
 
 import entities.Movies;
-import entities.Ticket;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +32,12 @@ public class MoviesController {
     public ResponseEntity<Movies> createMovie(@RequestBody Movies movies) {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(movies.getId()).toUri();
         return ResponseEntity.created(uri).body(moviesService.create(movies));
+    }
+
+    @PostMapping("/{movieId}/{movieRoomId}")
+    public ResponseEntity<Movies> registrateMovie (@PathVariable Long movieId, @PathVariable Long movieRoomId) {
+        moviesService.registratingMovie(movieId,movieRoomId);
+        return ResponseEntity.ok().body(moviesService.findById(movieId));
     }
 
     @PutMapping
