@@ -28,13 +28,13 @@ public class MoviesController {
         return ResponseEntity.ok().body(moviesService.findAll());
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Movies> createMovie(@RequestBody Movies movies) {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(movies.getId()).toUri();
         return ResponseEntity.created(uri).body(moviesService.create(movies));
     }
 
-    @PostMapping("/{movieId}/{movieRoomId}")
+    @PostMapping("/registrate/{movieId}/{movieRoomId}")
     public ResponseEntity<Movies> registrateMovie (@PathVariable Long movieId, @PathVariable Long movieRoomId) {
         moviesService.registratingMovie(movieId,movieRoomId);
         return ResponseEntity.ok().body(moviesService.findById(movieId));

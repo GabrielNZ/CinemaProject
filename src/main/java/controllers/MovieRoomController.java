@@ -1,13 +1,12 @@
 package controllers;
 
+import entities.DTO.MovieRoomDTO;
 import entities.MovieRoom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import services.MovieRoomService;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -27,13 +26,12 @@ public class MovieRoomController {
     }
 
     @PostMapping
-    public ResponseEntity<MovieRoom> createMovie(@RequestBody MovieRoom movieRoom) {
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(movieRoom.getId()).toUri();
-        return ResponseEntity.created(uri).body(movieRoomService.create(movieRoom));
+    public ResponseEntity<MovieRoom> createMovie(@RequestBody MovieRoomDTO movieRoom) {
+        return ResponseEntity.ok().body(movieRoomService.create(movieRoom));
     }
 
     @PutMapping
-    public ResponseEntity<MovieRoom> updateMovie(@RequestBody MovieRoom movieRoom) {
+    public ResponseEntity<MovieRoom> updateMovieRoom(@RequestBody MovieRoom movieRoom) {
         return ResponseEntity.ok().body(movieRoomService.update(movieRoom));
     }
 

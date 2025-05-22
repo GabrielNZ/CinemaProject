@@ -2,8 +2,6 @@ package services;
 
 import entities.MovieRoom;
 import entities.Movies;
-import entities.Ticket;
-import entities.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;

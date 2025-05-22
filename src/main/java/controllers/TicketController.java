@@ -31,10 +31,10 @@ public class TicketController {
     }
 
 
-    @PostMapping("{id}")
-    public ResponseEntity<Object> createTicket(@RequestBody Ticket ticket,@PathVariable Long id) {
+    @PostMapping("/create/{id}")
+    public ResponseEntity<Object> createTicket(@RequestBody Ticket ticket,@PathVariable Long movieRoomId) {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(ticket.getId()).toUri();
-        MovieRoom movieRoom = movieRoomRepository.findById(id).get();
+        MovieRoom movieRoom = movieRoomRepository.findById(movieRoomId).get();
         if(movieRoom.getAvailableSeats() > 0) {
             ticket.setMovieRoom(movieRoom);
             movieRoom.getTicket().add(ticket);
@@ -44,7 +44,7 @@ public class TicketController {
         return ResponseEntity.ok().body("Movie Room already full");
     }
 
-    @PostMapping("{ticketId}/{userId}")
+    @PostMapping("/registrate/{ticketId}/{userId}")
     public ResponseEntity<Ticket> registrateTicket(@PathVariable Long ticketId,@PathVariable Long userId) {
         ticketService.registratingTicket(ticketId,userId);
         return ResponseEntity.ok().body(ticketService.findById(ticketId));
