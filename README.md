@@ -13,6 +13,7 @@ The application consists of the management of a Cinema, create movies,tickets, m
 - Spring Boot
 - Spring Web
 - Spring Security
+- JWT Token
 - JPA / Hibernate
 - Maven
 ## Implementation
