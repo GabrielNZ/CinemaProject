@@ -1,5 +1,5 @@
 # Cinema Project
-[![NPM](https://github.com/GabrielNZ/CinemaProject/blob/main/LICENSE)
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/GabrielNZ/CinemaProject/blob/main/LICENSE)
 
 # About the project
 
